@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewBag.Title = "Shopping Lists";
+}
+
+<h2>Shopping Lists</h2>
+
+<p>
+    Under Construction!
+</p>
+<p>
+    Here's a Query that should only pull the most recent prices  stuff really nicely:
+</p>
+
+<pre><code>--Not a perfect solution, but I'm trying
+select      ProductID,
+            min(Price.Value),
+            max(Price.Date)
+from        Price
+group by    ProductID;
+</code></pre>
+
+@{
+    var myChart = new Chart(width: 600, height: 400)
+       .AddTitle("Employees")
+       .AddSeries(chartType: "line",
+          xValue: new[] { "Peter", "Andrew", "Julie", "Mary", "Dave" },
+          yValues: new[] { "2", "6", "4", "5", "3" })
+       .Write();
+}

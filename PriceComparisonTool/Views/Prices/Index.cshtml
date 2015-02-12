@@ -1,0 +1,82 @@
+﻿@model IEnumerable<PriceComparisonTool.Models.Price>
+
+@{
+    ViewBag.Title = "Prices";
+}
+
+<h2>@ViewBag.Title</h2>
+<div class="row">
+    <div class="col-md-12">
+        <p>
+            <em>Prices's</em> are can vary from one <em>Store</em> 
+            to the next on the exact same <em>Products</em> 
+            Why not go to the <em>Stores</em> that have the best
+            deal on the <em>Products</em> you want? With 
+            <em>Price Comparsion Tool</em> you can!            
+        </p>
+        <p>
+            To view the Prices, Select the <em>"Shopping List"</em> link from
+            the drop-down at the top of the page and from there, begin creating
+            a new shopping list.
+        </p>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(p => p.Store.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(p => p.Product.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(p => p.Product.AmountInUnits)
+        </th>
+        <th>
+            @Html.DisplayNameFor(p => p.Value)
+        </th>
+        <th>
+            @Html.DisplayNameFor(p => p.LabeledUnitPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(p => p.Date)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var price in Model) {
+    <tr>
+        <td>
+            @*@Html.DisplayFor(m => price.Store.Name)*@
+            @Html.ActionLink(price.Store.Name, "Details", "Store", new { id = price.Store.ID }, null)
+            
+        </td>
+        <td>
+            @*@Html.DisplayFor(m => price.Product.Name)*@
+            @Html.ActionLink(price.Product.Name, "Details", "Product", new { id = price.Product.ID }, null)
+            
+        </td>
+        <td>
+            @Html.DisplayFor(m => price.Product.AmountInUnits)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => price.Value)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => price.LabeledUnitPrice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => price.Date)
+        </td>
+       <td>
+            @Html.ActionLink("Edit", "Edit", new { id = price.PriceID }) |
+            @Html.ActionLink("Details", "Details", new { id = price.PriceID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = price.PriceID })
+        </td>
+    </tr>
+}
+
+</table>

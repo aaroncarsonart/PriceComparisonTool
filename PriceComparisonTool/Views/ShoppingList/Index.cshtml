@@ -1,0 +1,132 @@
+﻿@model PriceComparisonTool.ViewModels.ShoppingListViewModel
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Shopping Lists";
+}
+
+<h2>@ViewBag.Title</h2>
+<div class="row">
+    <div class="col-md-12">
+        <p>
+            Shopping Lists help you organize your shopping.
+            Create shopping lists, and then add List Items
+            to the lists, specifying how many of each Product
+            you need.  Then, <em>Price Comparsion Tool</em>
+            will automatically generate a list sorted by the
+            store with the best price (based off of the
+            most recent <em>Price</em> entries).
+        </p>
+        <p>
+            To view the Shopping List's entries, Select a <em>"Shopping List"</em> label.
+            To open a new page displaying the entire shopping list, elect a Shopping List's <em>"Details"</em> link.
+        </p>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Create New Shopping List", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Shopping List
+        </th>
+        <th>
+            Store Selection Priority
+        </th>
+        <th>
+            Date Created
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.ShoppingLists)
+    {
+        string selectedRow = "";
+        if (item.ID == ViewBag.ListID)
+        {
+            selectedRow = "success";
+        }
+        <tr class="@selectedRow">
+            <td>
+                @Html.ActionLink(item.Label, "Index", new { id = item.ID })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ListPriority.Label)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateCreated)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
+
+</table>
+
+@if (Model.ListItems != null)
+{
+    <hr />
+    <h3>
+        @{
+    string var = Model.ShoppingLists.Where(i => i.ID == ViewBag.ListID).Single().Label;
+    @Html.Raw("List Items for <em>" + var + "</em>");
+        }
+    </h3>
+    <p>
+        These are the individual entires that have been added to this list.
+        Select a <em>"Store"</em> or <em>"Product"</em> link below for more information.
+    </p>
+    <p>
+        @*@Html.ActionLink("Add List Item", "AddEntry", "ShoppingList", new { listID = ViewBag.ListID }, null)*@
+        @Html.ActionLink("Add List Item", "Create", "ListItem", new { id = ViewBag.ListID }, null)
+        @Html.ActionLink("View Printable Version »", "Details", "ShoppingList",
+                       new { id = ViewBag.ListID }, new { @class = "pull-right" })
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                Store Name
+            </th>
+            <th>
+                Product
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.ListItems)
+        {
+            <tr>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.Store.Name)*@
+                    @Html.ActionLink(item.Store.Name, "Details", "Store", new { id = item.Store.ID }, null)
+                </td>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.Product.Name)*@
+                    @Html.ActionLink(item.Product.Name + " (" + item.Product.AmountInUnits + ")",
+            "Details", "Product", new { id = item.Product.ID }, null)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", "ListItem", new { id = item.ItemID }, null) |
+                    @Html.ActionLink("Details", "Details", "ListItem", new { id = item.ItemID }, null) |
+                    @Html.ActionLink("Delete", "Delete", "ListItem", new { id = item.ItemID }, null)
+                </td>
+            </tr>
+        }
+
+    </table>
+    <br />
+    @Html.Raw("<strong>List Items</strong> - Page ")
+    @Html.Raw((Model.ListItems.PageCount < Model.ListItems.PageNumber ? 0 : Model.ListItems.PageNumber) + " of " + (Model.ListItems.PageCount))
+    @Html.PagedListPager(Model.ListItems, page => Url.Action("Index", new { id = ViewBag.ListID, listItemPage = page }))
+}

@@ -1,0 +1,78 @@
+﻿@model IEnumerable<PriceComparisonTool.Models.ListItem>
+
+@{
+    ViewBag.Title = "List Items";
+}
+
+<h2>@ViewBag.Title</h2>
+<div class="row">
+    <div class="col-md-12">
+        <p>
+            <em>List Items</em> are the products you add to a
+            shopping list. A shopping list doesn't have to be
+            from just one <em>Store</em>, it can be associated
+            with many <em>Stores</em> or it can be to just one.
+        </p>
+        <p>
+            To view the List Itemss, Select the <em>"ListItems"</em> link from
+            the drop-down at the top of the page. If you would like more information
+            select the <em>"Details"</em> link.
+        </p>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@using (Html.BeginForm())
+{
+    <p>
+        Search for: @Html.TextBox("SearchString")
+        <input type="submit" value="Search" />
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("List Name", "Index", new { sortOrder = ViewBag.NameSortParm })
+        </th>
+        <th>
+            @Html.ActionLink("Store Name", "Index", new { sortOrder = ViewBag.NameSortParm })
+        </th>
+        <th>
+            Product
+        </th>
+        <th>
+            Quantity
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShoppingList.Label)
+            </td>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.Store.Name)*@
+                @Html.ActionLink(item.Store.Name, "Details", "Store", new { id = item.Store.ID }, null)
+            </td>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.Product.Name)*@
+                @Html.ActionLink(item.Product.Name + " (" + item.Product.AmountInUnits + ")",
+            "Details", "Product", new { id = item.Product.ID }, null)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ItemID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ItemID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ItemID })
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,175 @@
+﻿@model PriceComparisonTool.ViewModels.ProductViewModel
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.Title = "Products";
+}
+
+@if (Model.Prices != null)
+{
+    <h3>
+        @{
+    IEnumerable<PriceComparisonTool.Models.Product> var = Model.Products.Where(i => i.ID == ViewBag.ProductID);
+
+    var p = Model.Products.Where(i => i.ID == ViewBag.ProductID).FirstOrDefault();
+    string productLabel = "Selected Product";
+    if (p != null)
+    {
+        productLabel = p.Name + " <em>(" + p.AmountInUnits+")</em>";
+    }
+    @Html.Raw("Recent prices for <strong>" + productLabel +"</strong>");
+            @*@Html.Raw("Prices for " + var.FirstOrDefault().Name);*@
+        }
+    </h3>
+
+    <table class="table">
+        <tr>
+            <th>
+                Store
+            </th>
+            <th>
+                Price
+            </th>
+            <th>
+                Unit Price
+            </th>
+            <th>
+                Date
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var price in Model.Prices)
+        {
+            <tr>
+                <td>
+                    @*@Html.DisplayFor(m => price.Store.Name)*@
+                    @Html.ActionLink(price.Store.Name, "Details", "Store", new { id = price.Store.ID }, null)
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => price.Value)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => price.LabeledUnitPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => price.Date)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = price.PriceID }) |
+                    @Html.ActionLink("Details", "Details", new { id = price.PriceID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = price.PriceID })
+                </td>
+            </tr>
+        }
+
+    </table>
+
+}
+
+
+<h2>@ViewBag.Title</h2>
+<div class="row">
+    <div class="col-md-12">
+        <p>
+            <em>Product's</em> are the goods sold by your favorite
+            <em>Stores</em>. Each <em>Product</em> has identifying
+            information which helps differentiate it from others 
+            such as UPC and Quantity. Most <em>Stores</em> rely on
+            UPC for tracking the products they offer.  
+            <em>Price Comparsion Tool</em> sorts the products by 
+            <em>Category</em> and Name. In addition each product
+            can be selected to view the price information from
+            different <em>Stores</em>.
+        </p>
+        <p>
+            To view the Products, Select the <em>"Products"</em> link from
+            the drop-down at the top of the page and gain more information 
+            by clicking on the product name.
+        </p>
+    </div>
+</div>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            Category
+        </th>
+        <th>
+            Product Name
+        </th>
+        <th>
+            Amount in Units
+        </th>
+        <th>
+            UPC
+        </th>
+        <th>
+            SKUs
+        </th>
+        @*<th>
+            GMO
+        </th>
+        <th>
+            Certified Organic
+        </th>
+        <th>
+            Locally Grown
+        </th>*@
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Products)
+    {
+        string selectedRow = "";
+        if (item.ID == ViewBag.ProductID)
+        {
+            selectedRow = "success";
+        }
+        <tr class="@selectedRow">
+            <td>
+                @Html.DisplayFor(m => item.Category.Name)
+            </td>
+            <td>
+                @*@Html.DisplayFor(m => item.Name)*@
+                @Html.ActionLink(item.Name, "Index", new { id = item.ID, productPage = Model.Products.PageNumber })
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.AmountInUnits)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.UPC)
+            </td>
+            <td>
+                @foreach (var p in item.ProductSKU)
+                {
+                    @Html.Raw(p.SKU + " (" + p.Store.Name + ")<br />")
+                }
+            </td>
+             @*<td>
+                @Html.DisplayFor(m => item.IsGMO)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.IsCO)
+            </td>
+            <td>
+              @Html.DisplayFor(m => item.IsLG)
+            </td>*@
+            <td>               
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            </td>
+
+        </tr>
+    }
+
+</table>
+<br />    
+@Html.Raw("<strong>Products</strong> - Page ") 
+@Html.Raw((Model.Products.PageCount < Model.Products.PageNumber ? 0 : Model.Products.PageNumber) + " of " + (Model.Products.PageCount))
+@Html.PagedListPager(Model.Products, page => Url.Action("Index", new { id = ViewBag.ProductID, productPage = page }))
+

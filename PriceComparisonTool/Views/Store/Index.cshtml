@@ -1,0 +1,70 @@
+﻿@model IEnumerable<PriceComparisonTool.Models.Store>
+
+@{
+    ViewBag.Title = "Stores";
+}
+
+<h2>@ViewBag.Title</h2>
+<div class="row">
+    <div class="col-md-12">
+        <p>
+            <em>Stores</em> are all of your favorite places to purchase
+            the goods you like. When you visit one of your
+            stores you can input the name and location of
+            the <em>Store</em>. With your store information saved to
+            <em>Price Comparsion Tool</em> you can easily
+            associate the products and prices at that store
+            to a list which can help you track the <em>Price</em> 
+            of your favorite goods at each <em>Store</em>.
+        </p>
+        <p>
+            To view the Stores, Select the <em>"Stores"</em> link from 
+            the drop-down at the top of the page. To open a new page 
+            displaying the detailed information, including the store's 
+            address select a Store's <em>"Details"</em> link.
+        </p>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Zipcode)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.Raw(String.Format("{0:(###) ###-####}", Convert.ToInt64(item.PhoneNumber)))
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Zipcode)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

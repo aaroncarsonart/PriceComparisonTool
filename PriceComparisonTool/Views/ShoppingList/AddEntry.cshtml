@@ -1,0 +1,105 @@
+﻿@model PriceComparisonTool.ViewModels.CreateListItemViewModel
+
+@{
+    ViewBag.Title = "Add new List Item to " + Model.ShoppingList.Label;
+}
+
+<h2>@Model.ShoppingList.Label</h2>
+<h4>Add List Item entry</h4>
+<div class="row">
+    <div class="col-md-12">
+        <h4>
+            <strong>Date Created: </strong>@Html.DisplayFor(m => m.ShoppingList.DateCreated)
+        </h4>
+    </div>
+</div>
+<p />
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+<div class="form-horizontal">
+    <div class="form-group">
+        @Html.LabelFor(model => model.NewListItem.ListID, "ListID", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("ListID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.NewListItem.ListID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.NewListItem.ProductID, "ProductID", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("ProductID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.NewListItem.ProductID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.NewListItem.StoreID, "Store", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("StoreID", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.NewListItem.StoreID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.NewListItem.Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.NewListItem.Quantity, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.NewListItem.Quantity, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+
+            <input type="submit" value="Create"  class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<table class="table">
+    <tr>
+        <th>
+            Store Name
+        </th>
+        <th>
+            Product
+        </th>
+        <th>
+            Quantity
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.ListItems)
+    {
+        <tr>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.Store.Name)*@
+                @Html.ActionLink(item.Store.Name, "Details", "Store", new { id = item.Store.ID }, null)
+            </td>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.Product.Name)*@
+                @Html.ActionLink(item.Product.Name + " (" + item.Product.AmountInUnits + ")",
+                       "Details", "Product", new { id = item.Product.ID }, null)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td></td>
+        </tr>
+    }
+</table>
+<p>
+    @Html.ActionLink("Back to Shopping List", "Index")
+</p>

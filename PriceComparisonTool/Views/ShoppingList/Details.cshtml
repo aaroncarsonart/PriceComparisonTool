@@ -1,0 +1,99 @@
+﻿@model PriceComparisonTool.ViewModels.ShoppingListDetailsViewModel
+
+@{
+    ViewBag.Title = "Shopping List details for " + Model.ShoppingList.Label;
+}
+
+<h2>@Model.ShoppingList.Label</h2>
+@*
+<div class="row">
+    <div class="col-md-12">
+        <h4>
+            <strong>Date Created: </strong>@Html.DisplayFor(m => m.ShoppingList.DateCreated)
+        </h4>
+    </div>
+</div>*@
+
+<div>
+    <h4>Details</h4>
+    <hr />
+    <dl class="dl-horizontal">
+       <dt>
+            Shopping List
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShoppingList.Label)
+        </dd>
+ 
+        <dt>
+            Store Priority
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShoppingList.ListPriority.Label)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShoppingList.DateCreated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShoppingList.DateCreated)
+        </dd>
+
+    </dl>
+</div>
+
+<p />
+<p>
+    @Html.ActionLink("Add List Item", "AddEntry", "ShoppingList", new { listID = Model.ShoppingList.ID }, null)
+</p>
+<h4>List Item Entries</h4>
+<table class="table">
+    <tr>
+        <th>
+            Store Name
+        </th>
+        <th>
+            Category
+        </th>
+        <th>
+            Product
+        </th>
+        <th>
+            Quantity
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.ListItems)
+    {
+        <tr>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.Store.Name)*@
+                @Html.ActionLink(item.Store.Name, "Details", "Store", new { id = item.Store.ID }, null)
+            </td>
+            <td>
+                @Html.DisplayFor(i => item.Product.Category.Name)
+            </td>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.Product.Name)*@
+                @Html.ActionLink(item.Product.Name + " (" + item.Product.AmountInUnits + ")",
+                       "Details", "Product", new { id = item.Product.ID }, null)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", "ListItem", new { id = item.ItemID }, null) |
+                @Html.ActionLink("Details", "Details", "ListItem", new { id = item.ItemID }, null) |
+                @Html.ActionLink("Delete", "Delete", "ListItem", new { id = item.ItemID }, null)
+            </td>
+        </tr>
+    }
+</table>
+<p>
+    @Html.ActionLink("Edit Shopping List info", "Edit", new { id = Model.ShoppingList.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

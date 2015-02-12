@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceComparisonTool", "PriceComparisonTool\PriceComparisonTool.csproj", "{57683E3F-E9A8-4B4E-84A6-1E4DFBA13312}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 2
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://gmck95.visualstudio.com/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = PriceComparisonTool\\PriceComparisonTool.csproj
+		SccProjectName1 = PriceComparisonTool
+		SccLocalPath1 = PriceComparisonTool
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{57683E3F-E9A8-4B4E-84A6-1E4DFBA13312}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57683E3F-E9A8-4B4E-84A6-1E4DFBA13312}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57683E3F-E9A8-4B4E-84A6-1E4DFBA13312}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57683E3F-E9A8-4B4E-84A6-1E4DFBA13312}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

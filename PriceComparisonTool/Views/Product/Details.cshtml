@@ -1,0 +1,87 @@
+﻿@model PriceComparisonTool.Models.Product
+
+@{
+    ViewBag.Title = Model.Name;
+}
+
+<h2>@ViewBag.Title</h2>
+
+<ol>
+    <h4>Product Details</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UPC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UPC)
+        </dd>
+
+        <dt>
+            SKUs
+        </dt>
+
+        <dd>
+            <ul>
+                @foreach (var p in Model.ProductSKU)
+                {
+                    <li>@p.SKU (@p.Store.Name)</li>
+                    }
+            </ul>
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AmountInUnits)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AmountInUnits)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Category.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Category.Name)
+        </dd>
+
+        <dt>
+            Genetically Modified
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsGMO)
+        </dd>
+
+        <dt>
+            Certified Organic
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsCO)
+        </dd>
+
+        <dt>
+            Locally Grown
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsLG)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Add A Product SKU", "Create","ProductSKU")
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,53 @@
+﻿@model PriceComparisonTool.Models.ListItem
+
+@{
+    ViewBag.Title = @Model.ShoppingList.Label + " List Item details";
+}
+
+<h2>@Model.Product.Name</h2>
+
+<div>
+    <h4>List Item Details</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Shopping List
+        </dt>
+        <dd>
+            @Html.ActionLink(Model.ShoppingList.Label + " (" + (@Html.DisplayFor(model => model.ShoppingList.DateCreated).ToString() + ")")
+                    , "Details", "ShoppingList", new { id = Model.ShoppingList.ID }, null)
+        </dd>
+
+        <dt>
+            Store
+        </dt>
+        <dd>
+            @*@Html.DisplayFor(model => model.Store.Name)*@
+            @Html.ActionLink(Model.Store.Name, "Details", "Store", new { id = Model.Store.ID }, null)
+            
+        </dd>
+
+        <dt>
+            Product
+        </dt>
+
+        <dd>
+            @*@Html.Raw(Model.Product.Name + " (" + Model.Product.AmountInUnits + ")")*@
+            @Html.ActionLink(Model.Product.Name + " (" + Model.Product.AmountInUnits + ")", 
+            "Details", "Product", new { id = Model.Product.ID }, null)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ItemID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
